@@ -2,7 +2,7 @@ import axios from "axios";
 import ModbusRTU from "modbus-serial";
 
 // Replace with your actual Cloud API URL
-const CLOUD_API_URL = "https://plc-cloud-api.onrender.com/api/plc-upload";
+const CLOUD_API_URL = "https://plc-online-dashboard.onrender.com/api/plc-upload";
 
 const client = new ModbusRTU();
 const PLC_IP = "192.168.0.10"; // Example
