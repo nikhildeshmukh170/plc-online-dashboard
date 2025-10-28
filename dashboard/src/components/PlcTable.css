@@ -1,10 +1,11 @@
 .table-container {
-  background: white;
+  background: linear-gradient(180deg, var(--card-bg) 0%, var(--surface-1) 100%);
   border-radius: 12px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  max-width: 800px;
-  margin: 40px auto;
+  box-shadow: 0 6px 18px rgba(2, 24, 64, 0.08);
+  padding: 18px;
+  max-width: 980px;
+  margin: 28px auto;
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
 }
 
 h2 {
@@ -12,38 +13,212 @@ h2 {
   margin-bottom: 20px;
 }
 
+.table-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.legend {
+  display: flex;
+  align-items: center;
+  color: #475569;
+  font-size: 14px;
+}
+
+.legend .dot {
+  width: 10px;
+  height: 10px;
+  background: #10b981;
+  border-radius: 50%;
+  margin-right: 8px;
+  box-shadow: 0 0 8px rgba(16, 185, 129, 0.18);
+}
+
+.loader {
+  font-size: 13px;
+  color: #64748b;
+}
+
+/* Table styling */
 table {
   width: 100%;
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0 8px;
+  table-layout: fixed;
 }
 
 th,
 td {
-  padding: 10px;
-  border-bottom: 1px solid #eee;
-  text-align: center;
+  padding: 12px 14px;
+  text-align: left;
+  vertical-align: middle;
 }
 
 th {
-  background: #007bff;
-  color: white;
+  background: transparent;
+  color: #334155;
+  font-weight: 600;
+  font-size: 13px;
+  text-transform: uppercase;
 }
 
-button {
-  background: #007bff;
-  color: white;
+tbody tr.data-row {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(2, 24, 64, 0.04);
+  transition: all 180ms ease;
+}
+
+tbody tr.data-row td {
+  border-bottom: none;
+}
+
+.data-row:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(2, 6, 23, 0.08);
+}
+
+/* Column widths */
+.tag-cell {
+  width: 28%;
+  font-weight: 600;
+  color: var(--primary);
+}
+
+.value-cell {
+  width: 28%;
+  color: var(--bg-0);
+}
+
+.time-cell {
+  width: 28%;
+  color: var(--muted);
+}
+
+.actions-cell {
+  width: 16%;
+  text-align: right;
+}
+
+/* Edit input */
+.edit-input {
+  width: 100%;
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid rgba(14, 16, 30, 0.06);
+  outline: none;
+  background: #fff;
+}
+
+.edit-input:focus {
+  box-shadow: 0 0 0 6px rgba(99, 102, 241, 0.06);
+  border-color: var(--accent);
+}
+
+/* Buttons */
+.btn {
+  padding: 8px 12px;
+  border-radius: 8px;
   border: none;
-  padding: 5px 10px;
-  border-radius: 6px;
   cursor: pointer;
+  font-weight: 600;
 }
 
-button:hover {
-  background: #0056b3;
+.btn:disabled {
+  opacity: 0.6;
+  cursor: default;
 }
 
-input {
-  padding: 5px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+.btn-edit {
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  color: #fff;
+}
+
+.btn-save {
+  background: var(--accent-cta);
+  color: #fff;
+  margin-right: 8px;
+}
+
+.btn-cancel {
+  background: transparent;
+  color: var(--muted);
+  border: 1px solid rgba(14, 16, 30, 0.04);
+}
+
+/* Skeleton loading state */
+.skeleton {
+  opacity: 0.9;
+}
+
+.skeleton .skeleton-line {
+  height: 12px;
+  border-radius: 8px;
+  display: inline-block;
+  animation: shimmer 1.2s linear infinite;
+  background: linear-gradient(
+    90deg,
+    rgba(236, 239, 255, 0.9) 0%,
+    rgba(246, 249, 255, 0.6) 50%,
+    rgba(236, 239, 255, 0.9) 100%
+  );
+}
+
+.skeleton .skeleton-line.short {
+  width: 70px;
+}
+
+.skeleton .skeleton-line.medium {
+  width: 140px;
+}
+
+.skeleton .skeleton-line.tiny {
+  width: 50px;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200px 0;
+  }
+  100% {
+    background-position: 200px 0;
+  }
+}
+
+/* Empty state */
+.empty {
+  text-align: center;
+  padding: 32px 0;
+  color: #94a3b8;
+}
+
+/* Responsive */
+@media (max-width: 720px) {
+  .table-container {
+    padding: 12px;
+    margin: 16px;
+  }
+
+  .tag-cell,
+  .value-cell,
+  .time-cell {
+    display: block;
+    width: 100%;
+  }
+
+  th,
+  td {
+    padding: 10px;
+  }
+
+  .actions-cell {
+    text-align: left;
+    margin-top: 8px;
+  }
+
+  table {
+    border-spacing: 0 6px;
+  }
 }

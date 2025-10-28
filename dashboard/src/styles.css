@@ -1,18 +1,56 @@
 body {
-  font-family: "Poppins", sans-serif;
-  background: #f7f9fc;
+  font-family: "Inter", "Poppins", sans-serif;
+  background: linear-gradient(180deg,var(--surface-1) 0%, #f6f8fb 100%);
   margin: 0;
-  padding: 20px;
+  padding: 0px;
 }
 
+html { scroll-behavior: smooth }
+
+.App { max-width: 1200px; margin: 0 auto; }
+
 .table-container {
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  max-width: 800px;
-  margin: auto;
+  margin-top: 12px;
 }
+
+/* global color tokens */
+:root {
+  /* Primary brand tokens (match header gradient) */
+  --bg-0: #0f172a; /* deep navy */
+  --bg-1: #0b1220; /* darker navy */
+  --primary: #0f172a; /* primary text */
+  --muted: #94a3b8; /* secondary text */
+  --accent: #6366f1; /* purple */
+  --accent-2: #06b6d4; /* teal */
+  --accent-cta: #10b981; /* success/cta */
+  --card-bg: #ffffff; /* card surface */
+  --surface-1: #eef2ff; /* subtle surface tint */
+}
+
+/* dark theme tokens */
+:root[data-theme="dark"], [data-theme="dark"] {
+  --bg-0: #0b1220;
+  --bg-1: #090b12;
+  --primary: #e6eef8;
+  --muted: #94a3b8;
+  --accent: #7c5cff;
+  --accent-2: #06b6d4;
+  --accent-cta: #06d6a0;
+  --card-bg: #071126;
+  --surface-1: #071833;
+}
+
+/* subtle elevation and transitions */
+* { box-sizing: border-box }
+button { transition: background 200ms ease, transform 120ms ease }
+button:active { transform: translateY(1px) }
+
+.card { transition: transform 200ms ease, box-shadow 200ms ease }
+.card:hover { transform: translateY(-6px); box-shadow: 0 20px 40px rgba(2,6,23,0.08) }
+
+/* utility */
+.text-muted { color: var(--muted) }
+.accent { color: var(--accent) }
 
 table {
   width: 100%;
@@ -46,3 +84,21 @@ input {
   width: 80%;
   padding: 5px;
 }
+
+/* Layout grid */
+.app-grid { display:flex; flex-direction:column; gap:18px; max-width:1200px }
+.app-body { display:flex; gap:18px; align-items:flex-start }
+.app-main { flex:1; display:flex; flex-direction:column; gap:14px }
+
+/* Card polish */
+.card { background: var(--card-bg); padding: 14px; border-radius: 12px; box-shadow: 0 6px 18px rgba(2,6,23,0.06) }
+
+/* Responsive tweaks */
+@media (max-width: 900px) {
+  .App { padding: 12px }
+  .app-body { flex-direction:column }
+}
+
+.plc-table-row:hover { background: rgba(99,102,241,0.03) }
+.plc-table-row:nth-child(even) { background: rgba(2,6,23,0.01) }
+

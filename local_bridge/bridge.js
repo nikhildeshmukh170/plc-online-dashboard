@@ -1,46 +1,50 @@
 import axios from "axios";
 import ModbusRTU from "modbus-serial";
 
-// Replace with your actual Cloud API URL
-const CLOUD_API_URL = "https://plc-online-dashboard.onrender.com/api/plc-upload";
+// ✅ Cloud API URL (Render endpoint)
+const CLOUD_API_URL = "https://plc-online-dashboard.onrender.com/api/plc/update"; // 👈 match your Render API route
 
-const client = new ModbusRTU();
-const PLC_IP = "192.168.0.10"; // Example
+// ✅ PLC details
+const PLC_IP = "192.168.0.10"; // Replace with actual PLC IP
 const PLC_PORT = 502;
 
-// Connect to PLC
+const client = new ModbusRTU();
+
+// --- Connect to PLC ---
 async function connectPLC() {
   try {
     await client.connectTCP(PLC_IP, { port: PLC_PORT });
-    console.log("✅ Connected to PLC");
+    console.log("✅ Connected to PLC:", PLC_IP);
   } catch (error) {
-    console.error("PLC connection failed:", error.message);
+    console.error("❌ PLC connection failed:", error.message);
   }
 }
 
-// Read data and send to Cloud
+// --- Read from PLC and send to Cloud API ---
 async function readAndSendData() {
   try {
-    // const data = await client.readHoldingRegisters(0, 2); // Example register read
+    // Example: simulate PLC data for now (demo mode)
+    // In real scenario: const data = await client.readHoldingRegisters(0, 2);
     // const plcValue = data.data[0];
     const plcValue = Math.floor(Math.random() * 100);
 
-
-    await axios.post(CLOUD_API_URL, {
+    // Send to cloud API
+    const res = await axios.post(CLOUD_API_URL, {
       tag: "temperature",
       value: plcValue.toString(),
     });
 
-    console.log("📤 Sent to cloud:", plcValue);
+    console.log("📤 Sent to cloud:", plcValue, "| Cloud response:", res.status);
   } catch (err) {
-    console.error("Error:", err.message);
+    console.error("⚠️ Error sending data:", err.message);
   }
 }
 
-// Loop every 5 seconds
+// --- Start Process ---
 async function start() {
   await connectPLC();
-  setInterval(readAndSendData, 5000);
+  console.log("🚀 Starting PLC data upload loop...");
+  setInterval(readAndSendData, 5000); // every 5 seconds
 }
 
 start();

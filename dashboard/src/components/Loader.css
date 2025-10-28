@@ -1,0 +1,16 @@
+.loader-root {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--muted, #64748b);
+  font-size: 13px;
+}
+.spinner { animation: rotate 1s linear infinite; }
+.spinner .path { stroke: var(--accent); stroke-linecap: round; stroke-dasharray: 90; stroke-dashoffset: 60 }
+
+@keyframes rotate { 100% { transform: rotate(360deg) } }
+
+.loader-label { opacity: 0.95 }
+
+/* small standalone centered block */
+.loader-block { display:flex; align-items:center; justify-content:center; gap:12px; padding:12px }
