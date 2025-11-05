@@ -1,0 +1,81 @@
+/* Toast - simplified, system font, crisp and light */
+.Toastify__toast-container {
+  padding: 8px 12px;
+}
+
+/* Use a simple system UI stack for best readability across platforms */
+.Toastify__toast {
+  font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.4;
+  color: inherit;
+  padding: 10px 14px;
+  border-radius: 10px;
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 6px 18px rgba(2, 6, 23, 0.08);
+  border: 1px solid rgba(0,0,0,0.04);
+  background-clip: padding-box;
+  /* reduce heavy backdrop for a simpler look */
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+/* Keep toast body compact and left-aligned */
+.Toastify__toast-body {
+  padding: 0;
+  margin: 0;
+}
+
+/* Close button - subtle */
+.Toastify__close-button {
+  color: rgba(0,0,0,0.6);
+  opacity: 0.9;
+}
+
+.Toastify__close-button:hover {
+  opacity: 1;
+}
+
+/* Progress bar - subtle, uses low-contrast white when dark theme is active */
+.Toastify__progress-bar {
+  opacity: 0.85;
+}
+
+/* Color variants — keep them clear but not too saturated */
+.Toastify__toast--success {
+  background: #10b981; /* green */
+  color: #ffffff;
+  border-color: rgba(16,185,129,0.12);
+}
+
+.Toastify__toast--error {
+  background: #ef4444; /* red */
+  color: #ffffff;
+  border-color: rgba(239,68,68,0.12);
+}
+
+/* Dark mode: use darker, low-contrast containers but keep text legible */
+[data-theme="dark"] .Toastify__toast {
+  background: rgba(20, 25, 32, 0.96);
+  color: rgba(255,255,255,0.95);
+  border-color: rgba(255,255,255,0.04);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.45);
+}
+
+[data-theme="dark"] .Toastify__toast--success {
+  background: rgba(16,185,129,0.95);
+}
+
+[data-theme="dark"] .Toastify__toast--error {
+  background: rgba(239,68,68,0.95);
+}
+
+/* Slight spacing/position tweaks for container placements */
+.Toastify__toast-container--top-right {
+  top: 12px;
+  right: 12px;
+}

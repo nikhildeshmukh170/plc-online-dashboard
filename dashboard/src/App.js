@@ -5,6 +5,7 @@ import Header from "./components/Header";
 import SideNav from "./components/SideNav";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import "./components/toast.css";
 import "./styles.css";
 
 function App() {
@@ -35,7 +36,15 @@ function App() {
         </main>
       </div>
 
-      <ToastContainer position="top-right" autoClose={2000} />
+      <ToastContainer 
+        position="top-right" 
+        autoClose={2000}
+        hideProgressBar={false}
+        closeOnClick
+        pauseOnHover
+        draggable={false}
+        theme="colored"
+      />
     </div>
   );
 }

@@ -121,7 +121,12 @@ const PlcTable = () => {
           ) : (
             data.map((row) => (
               <tr key={row.id} className="data-row">
-                <td className="tag-cell">{row.tag}</td>
+                <td className="tag-cell">
+                  <div style={{display:'flex',alignItems:'center',gap:8}}>
+                    <span>{row.tag}</span>
+                    {row.status ? <span className="status-badge">{row.status}</span> : null}
+                  </div>
+                </td>
                 <td className="value-cell">
                   {editing === row.tag ? (
                     <input

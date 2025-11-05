@@ -10,9 +10,9 @@ export default function SideNav({ onNavigate }) {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const items = [
-    { id: 'overview', label: 'Overview', icon: '📊' },
-    { id: 'live', label: 'Live Values', icon: '⚡' },
-    { id: 'settings', label: 'Settings', icon: '⚙️' },
+    { id: 'overview', label: 'Overview', icon: '▤' },
+    { id: 'live', label: 'Live Values', icon: '◉' },
+    { id: 'settings', label: 'Settings', icon: '⚙' },
   ];
 
   useEffect(() => {
@@ -36,16 +36,21 @@ export default function SideNav({ onNavigate }) {
   };
 
   return (
-    <aside className={`sidenav ${collapsed ? 'collapsed' : ''} ${mobileOpen ? 'mobile-open' : ''}`}>
+    <>
+      <aside role="navigation" aria-label="Main navigation" aria-expanded={!collapsed} className={`sidenav ${collapsed ? 'collapsed' : ''} ${mobileOpen ? 'mobile-open' : ''}`}>
       <div className="sidenav-top">
-        <div className="brand">PLC Dashboard</div>
+        <div className="brand">
+          <img src="/logo.svg" alt="PLC Logo" className="brand-logo" />
+          {!collapsed && <span>PLC Dashboard</span>}
+        </div>
         <div style={{display:'flex',alignItems:'center',gap:8}}>
           <button
             aria-label={collapsed ? 'Expand navigation' : 'Collapse navigation'}
+            aria-pressed={collapsed}
             className="collapse-btn"
             onClick={() => setCollapsed((s) => !s)}
           >
-            {collapsed ? '☰' : '✕'}
+            {collapsed ? '▶' : '◀'}
           </button>
         </div>
       </div>
@@ -64,6 +69,9 @@ export default function SideNav({ onNavigate }) {
       </nav>
 
       <div className="sidenav-footer text-muted">v1.0 • Local</div>
-    </aside>
+      </aside>
+      {/* overlay to close mobile nav when open */}
+      {mobileOpen && <div className="sidenav-overlay" onClick={() => setMobileOpen(false)} aria-hidden="true" />}
+    </>
   );
 }

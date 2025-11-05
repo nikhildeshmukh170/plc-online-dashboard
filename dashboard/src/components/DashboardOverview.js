@@ -59,8 +59,13 @@ const DashboardOverview = () => {
       {
         label: "Value",
         data: values,
-        backgroundColor: "rgba(37,99,235,0.85)",
-        borderRadius: 6,
+        backgroundColor: "rgba(79,70,229,0.85)",
+        borderRadius: 8,
+        borderWidth: 0,
+        barThickness: 24,
+        maxBarThickness: 32,
+        hoverBackgroundColor: "rgba(79,70,229,0.95)",
+        hoverBorderWidth: 0,
       },
     ],
   };
@@ -70,7 +75,24 @@ const DashboardOverview = () => {
     datasets: [
       {
         data: values,
-        backgroundColor: ["#10b981", "#60a5fa", "#f59e0b", "#ef4444", "#8b5cf6"],
+        backgroundColor: [
+          "rgba(79,70,229,0.85)", // indigo
+          "rgba(14,165,233,0.85)", // sky
+          "rgba(5,150,105,0.85)",  // emerald
+          "rgba(234,88,12,0.85)",  // orange
+          "rgba(168,85,247,0.85)", // purple
+        ],
+        hoverBackgroundColor: [
+          "rgba(79,70,229,0.95)",
+          "rgba(14,165,233,0.95)",
+          "rgba(5,150,105,0.95)",
+          "rgba(234,88,12,0.95)",
+          "rgba(168,85,247,0.95)",
+        ],
+        borderWidth: 2,
+        borderColor: "rgba(255,255,255,0.8)",
+        hoverBorderColor: "white",
+        hoverOffset: 4,
       },
     ],
   };
@@ -85,7 +107,7 @@ const DashboardOverview = () => {
   // live "now" to make relative times update in real-time
   const [now, setNow] = useState(new Date());
   useEffect(() => {
-    const id = setInterval(() => setNow(new Date()), 90000);
+    const id = setInterval(() => setNow(new Date()), 1000);
     return () => clearInterval(id);
   }, []);
 
@@ -146,20 +168,24 @@ const DashboardOverview = () => {
       <div className="charts-row">
         <div className="chart card-chart">
           <h4>Values per Tag</h4>
-          {loading ? (
-            <div className="chart-center"><Loader size={36} label="Loading chart"/></div>
-          ) : (
-            <Bar data={barData} options={{ maintainAspectRatio: false, plugins: { legend: { display: false } } }} />
-          )}
+          <div className="chart-wrap">
+            {loading ? (
+              <div className="chart-center"><Loader size={36} label="Loading chart"/></div>
+            ) : (
+              <Bar data={barData} options={{ maintainAspectRatio: false, plugins: { legend: { display: false } } }} />
+            )}
+          </div>
         </div>
 
         <div className="chart card-chart small">
           <h4>Distribution</h4>
-          {loading ? (
-            <div className="chart-center"><Loader size={28} label="Loading"/></div>
-          ) : (
-            <Pie data={pieData} options={{ maintainAspectRatio: false }} />
-          )}
+          <div className="chart-wrap">
+            {loading ? (
+              <div className="chart-center"><Loader size={28} label="Loading"/></div>
+            ) : (
+              <Pie data={pieData} options={{ maintainAspectRatio: false }} />
+            )}
+          </div>
         </div>
       </div>
     </div>

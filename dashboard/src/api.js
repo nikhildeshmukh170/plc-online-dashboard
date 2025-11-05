@@ -1,7 +1,9 @@
 import axios from "axios";
 
+// Default to localhost:5000 when running locally if REACT_APP_API_URL is not set.
+const base = process.env.REACT_APP_API_URL || "http://localhost:5000";
 const api = axios.create({
-  baseURL: process.env.REACT_APP_API_URL,
+  baseURL: base,
 });
 export const getPLCData = async () => {
   // cloud_api exposes GET /api/plc/data
