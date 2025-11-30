@@ -12,6 +12,7 @@ export default function SideNav({ onNavigate }) {
   const items = [
     { id: 'overview', label: 'Overview', icon: '▤' },
     { id: 'live', label: 'Live Values', icon: '◉' },
+    { id: 'tags', label: 'Tags', icon: '✎' },
     { id: 'settings', label: 'Settings', icon: '⚙' },
   ];
 

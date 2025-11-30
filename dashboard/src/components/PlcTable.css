@@ -373,6 +373,12 @@ tbody tr.data-row td {
   color: #94a3b8;
 }
 
+/* History details */
+.history-row td { background: transparent; padding: 8px 20px; }
+.history-list { padding: 8px; }
+.history-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.history-table th, .history-table td { padding: 6px 8px; border: 1px solid rgba(14,165,233,0.06); }
+
 /* Responsive */
 @media (max-width: 720px) {
   .table-container {

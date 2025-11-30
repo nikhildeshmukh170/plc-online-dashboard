@@ -4,6 +4,8 @@
   "description": "",
   "main": "bridge.js",
   "scripts": {
+    "start": "node bridge.js",
+    "dev": "node bridge.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -11,6 +13,7 @@
   "license": "ISC",
   "dependencies": {
     "axios": "^1.13.0",
+    "dotenv": "^17.2.3",
     "modbus-serial": "^8.0.23"
   }
 }

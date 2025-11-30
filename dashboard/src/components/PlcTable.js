@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getPLCData, updatePLCValue } from "../api";
+import { getPLCData, updatePLCValue, getTagHistory } from "../api";
 import { toast } from "react-toastify";
 import "./PlcTable.css";
 import Loader from "./Loader";
@@ -10,16 +10,24 @@ const PlcTable = () => {
   const [editValue, setEditValue] = useState("");
   const [loading, setLoading] = useState(false);
   const [savingTag, setSavingTag] = useState(null);
+  const [expanded, setExpanded] = useState({});
+  const [histories, setHistories] = useState({});
 
   const fetchData = async () => {
     try {
       setLoading(true);
       const res = await getPLCData();
-      setData(Array.isArray(res) ? res : []);
+      if (Array.isArray(res)) {
+        setData(res);
+      } else {
+        console.error("Unexpected data format:", res);
+        toast.error("Invalid data format received");
+        setData([]);
+      }
     } catch (err) {
+      console.error("Fetch error:", err);
       toast.error("Failed to fetch data");
-    }
-    finally {
+    } finally {
       setLoading(false);
     }
   };
@@ -41,6 +49,18 @@ const PlcTable = () => {
       toast.error("Update failed");
     } finally {
       setSavingTag(null);
+    }
+  };
+
+  const toggleExpand = async (tag) => {
+    setExpanded(prev => ({...prev, [tag]: !prev[tag]}));
+    if (!histories[tag]) {
+      try {
+        const h = await getTagHistory(tag, 50);
+        setHistories(prev => ({...prev, [tag]: h}));
+      } catch (err) {
+        toast.error('Failed to load history');
+      }
     }
   };
 
@@ -120,11 +140,21 @@ const PlcTable = () => {
             </tr>
           ) : (
             data.map((row) => (
-              <tr key={row.id} className="data-row">
+              <React.Fragment key={row.id}>
+              <tr className="data-row">
                 <td className="tag-cell">
-                  <div style={{display:'flex',alignItems:'center',gap:8}}>
-                    <span>{row.tag}</span>
-                    {row.status ? <span className="status-badge">{row.status}</span> : null}
+                  <div style={{display:'flex',flexDirection:'column',gap:4}}>
+                    <div style={{display:'flex',alignItems:'center',gap:8}}>
+                      <span>{row.tag}</span>
+                      {row.status ? <span className="status-badge">{row.status}</span> : null}
+                    </div>
+                    {row.label || row.address || row.type ? (
+                      <div style={{fontSize: 12, color: '#666'}}>
+                        {row.label ? <span>{row.label}</span> : null}
+                        {row.address !== undefined ? <span style={{marginLeft:8}}>Addr: {row.address}</span> : null}
+                        {row.type ? <span style={{marginLeft:8}}>Type: {row.type}</span> : null}
+                      </div>
+                    ) : null}
                   </div>
                 </td>
                 <td className="value-cell">
@@ -135,7 +165,12 @@ const PlcTable = () => {
                       onChange={(e) => setEditValue(e.target.value)}
                     />
                   ) : (
-                    row.value
+                    (() => {
+                      if (row.value === null || row.value === undefined) return '-';
+                      if (typeof row.value === 'number' && isNaN(row.value)) return '—';
+                      if (typeof row.value === 'boolean') return row.value ? 'ON' : 'OFF';
+                      return `${row.value}${row.unit ? ' ' + row.unit : ''}`;
+                    })()
                   )}
                 </td>
                 <td className="time-cell" title={row.updated_at ? new Date(row.updated_at).toLocaleString() : "-"}>
@@ -154,10 +189,34 @@ const PlcTable = () => {
                       <button className="btn btn-cancel" onClick={handleCancel}>Cancel</button>
                     </>
                   ) : (
-                    <button className="btn btn-edit" onClick={() => handleEdit(row.tag, row.value)}>Edit</button>
+                    <>
+                      <button className="btn btn-edit" onClick={() => handleEdit(row.tag, row.value)}>Edit</button>
+                      <button className="btn" onClick={() => toggleExpand(row.tag)} style={{marginLeft:8}}>{expanded[row.tag] ? 'Hide' : 'History'}</button>
+                    </>
                   )}
                 </td>
               </tr>
+              {expanded[row.tag] ? (
+                <tr className="history-row">
+                  <td colSpan={4}>
+                    <div className="history-list">
+                      {(histories[row.tag] || []).length === 0 ? (
+                        <div>No history</div>
+                      ) : (
+                        <table className="history-table">
+                          <thead><tr><th>Value</th><th>Captured At</th></tr></thead>
+                          <tbody>
+                          {(histories[row.tag] || []).map(h => (
+                            <tr key={h.id}><td>{h.value}</td><td>{new Date(h.captured_at).toLocaleString()}</td></tr>
+                          ))}
+                          </tbody>
+                        </table>
+                      )}
+                    </div>
+                  </td>
+                </tr>
+              ) : null}
+              </React.Fragment>
             ))
           )}
         </tbody>

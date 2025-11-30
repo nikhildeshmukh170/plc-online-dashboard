@@ -1,5 +1,6 @@
 import React, { useRef } from "react";
 import PlcTable from "./components/PlcTable";
+import TagManager from "./components/TagManager";
 import DashboardOverview from "./components/DashboardOverview";
 import Header from "./components/Header";
 import SideNav from "./components/SideNav";
@@ -32,6 +33,7 @@ function App() {
 
         <main className="app-main">
           <DashboardOverview />
+          <TagManager />
           <PlcTable />
         </main>
       </div>

@@ -1,0 +1,11 @@
+.tag-manager { padding: 12px; background: var(--card-bg, #fff); border-radius: 6px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+.tag-form { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 12px; }
+.tag-form label { display:block; font-size: 12px; color: var(--muted, #666); }
+.tag-form input, .tag-form select { padding: 6px 8px; border-radius: 4px; border: 1px solid #ddd; width: 100%; }
+.tag-list table { width:100%; border-collapse: collapse; }
+.tag-list th, .tag-list td { padding: 6px 8px; border-bottom: 1px solid #eee; }
+.actions { grid-column: span 3; display:flex; gap:8px; }
+.btn { padding: 6px 10px; border-radius: 4px; border: none; cursor:pointer; }
+.btn-primary { background: #0078d4; color: white; }
+.btn-danger { background: #d9534f; color: white; }
+.btn-secondary { background: #f1f1f1; }
